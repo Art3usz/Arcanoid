@@ -6,6 +6,8 @@ public class BlockScript : MonoBehaviour
     //zmienne
     //ile razy mozna uderzyc kloec pilka nim zniknie
     public int hitsToKill = 1;
+    public GameObject cubeParticles;
+
     //punkty za zbicie klocka
     private int points = 1;
     //ile razy do tej pory zostal uderzony klocek
@@ -21,7 +23,7 @@ public class BlockScript : MonoBehaviour
     void Start()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
-        hitsToKill = Random.Range(0, 11);
+        hitsToKill = Random.Range(1, tableOfColors.Length);
         if (0 == hitsToKill)
         {
             Destroy(gameObject);
@@ -49,6 +51,7 @@ public class BlockScript : MonoBehaviour
             if (numberOfHits == hitsToKill)
             {
                 playerObject.GetComponent<PlayerScript>().ChangePoints(points);
+                Instantiate(cubeParticles,transform.position,Quaternion.Euler(90,0,0));
                 Destroy(gameObject);
             }else
             changeColor();
