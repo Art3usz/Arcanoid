@@ -60,7 +60,8 @@ public class PlayerScript : MonoBehaviour
         //po nacisnieciu klawisza escape zostaje wylaczona gra
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            //Application.Quit();
+            SceneManager.LoadScene("Menu");
         }
         if (neverSee == null)
             neverSee = GameObject.FindGameObjectWithTag("score");
