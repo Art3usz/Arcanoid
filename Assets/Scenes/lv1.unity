@@ -1549,6 +1549,7 @@ MonoBehaviour:
   ballInitialForce: {x: 5, y: 25}
   speed: 5
   hitSound: {fileID: 8300000, guid: 6b3546789d4628c47ad20f5f59d6e694, type: 3}
+  trail: {fileID: 2118532690}
 --- !u!82 &549654734
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6885,7 +6886,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.13493156
+        value: 0.1508007
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -6940,5 +6941,5 @@ TrailRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MinVertexDistance: 0.1
-  m_Autodestruct: 1
+  m_Autodestruct: 0
   m_Emitting: 1
