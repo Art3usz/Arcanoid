@@ -22,13 +22,18 @@ public class BallScript : MonoBehaviour
     void Start()
     {
         //zmienna oznaczajaca czy pileczka jest aktywna (w tym przypadku deaktywacja samodzielnosci)
-        ballIsActive = false;
+        ballIsActive = true;
+        StartCoroutine(FirstActivation());
         //pozycja poczatkowa pileczki
         ballPosition = transform.position;
         //pobranie komponentu Rigidbody2D i zapamietanie go w zmiennej
         rgb2D = gameObject.GetComponent<Rigidbody2D>();
         //pobranie odniesienia do obiektu playera i zapamietanie go w zmiennej
         playerObject = GameObject.FindGameObjectWithTag("Player");
+    }
+    IEnumerator FirstActivation(){
+        yield return new WaitForSeconds(2f);
+        ballIsActive = false;
     }
 
     float hitFactor(Vector2 ballPos, Vector2 racketPos, float playerWidth)
