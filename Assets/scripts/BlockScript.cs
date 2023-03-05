@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
-public class BlockScript : MonoBehaviour
-{
+public class BlockScript : MonoBehaviour {
     //zmienne
     //ile razy mozna uderzyc kloec pilka nim zniknie
     public int hitsToKill = 1;
@@ -11,7 +10,9 @@ public class BlockScript : MonoBehaviour
     //punkty za zbicie klocka
     private int points = 1;
     //ile razy do tej pory zostal uderzony klocek
-    private int numberOfHits = 0;
+    public int numberOfHits = 0;
+
+    public bool setRandomNumber = true;
     //obiekt playera
     private GameObject playerObject;
     //tablica kolorow 
@@ -20,41 +21,36 @@ public class BlockScript : MonoBehaviour
     SpriteRenderer sr;
     // Use this for initialization
 
-    void Start()
-    {
-        sr = gameObject.GetComponent<SpriteRenderer>();
-        hitsToKill = Random.Range(1, tableOfColors.Length);
-        if (0 == hitsToKill)
-        {
-            Destroy(gameObject);
+    void Start () {
+        sr = gameObject.GetComponent<SpriteRenderer> ();
+        if (setRandomNumber)
+            hitsToKill = Random.Range (1, tableOfColors.Length);
+        if (0 == hitsToKill) {
+            Destroy (gameObject);
             return;
         }
-        changeColor();
-        playerObject = GameObject.FindGameObjectWithTag("Player");
+        changeColor ();
+        playerObject = GameObject.FindGameObjectWithTag ("Player");
         points = hitsToKill * 5;
 
     }
-    private void changeColor()
-    {
+    private void changeColor () {
         int i = hitsToKill - 1 - numberOfHits;
         if (i >= tableOfColors.Length) i = tableOfColors.Length - 1;
-        sr.color = new Color(tableOfColors[i].r, tableOfColors[i].g, tableOfColors[i].b);
+        sr.color = new Color (tableOfColors[i].r, tableOfColors[i].g, tableOfColors[i].b);
 
     }
     //funkcja urochomiana po wykryciu kolizji / wejsciu w kolizje
-    void OnCollisionEnter2D(Collision2D collision)
-    {
+    void OnCollisionEnter2D (Collision2D collision) {
 
-        if (collision.gameObject.tag == "ball")
-        {
+        if (collision.gameObject.tag == "ball") {
             numberOfHits++;
-            if (numberOfHits == hitsToKill)
-            {
-                playerObject.GetComponent<PlayerScript>().ChangePoints(points);
-                Instantiate(cubeParticles,transform.position,Quaternion.Euler(90,0,0));
-                Destroy(gameObject);
-            }else
-            changeColor();
+            if (numberOfHits == hitsToKill) {
+                playerObject.GetComponent<PlayerScript> ().ChangePoints (points);
+                Instantiate (cubeParticles, transform.position, Quaternion.Euler (90, 0, 0));
+                Destroy (gameObject);
+            } else
+                changeColor ();
         }
     }
 

@@ -17,14 +17,16 @@ public class BallScript : MonoBehaviour {
     public int speed = 100;
     //dzwiek odbicia
     public AudioClip hitSound;
+    private AudioSource audioSource;
     //ślad piłeczki
     public TrailRenderer trail;
     // Use this for initialization
     void Start () {
+        audioSource = GetComponent<AudioSource> ();
         //zmienna oznaczajaca czy pileczka jest aktywna (w tym przypadku deaktywacja samodzielnosci)
-        ballIsActive = true;
+        ballIsActive = false;
         trail.time = 0f;;
-        StartCoroutine (FirstActivation ());
+       
         //pozycja poczatkowa pileczki
         ballPosition = transform.position;
         //pobranie komponentu Rigidbody2D i zapamietanie go w zmiennej
@@ -32,10 +34,7 @@ public class BallScript : MonoBehaviour {
         //pobranie odniesienia do obiektu playera i zapamietanie go w zmiennej
         playerObject = GameObject.FindGameObjectWithTag ("Player");
     }
-    IEnumerator FirstActivation () {
-        yield return new WaitForSeconds (2f);
-        ballIsActive = false;
-    }
+   
 
     float hitFactor (Vector2 ballPos, Vector2 racketPos, float playerWidth) {
         return (ballPos.x - racketPos.x) / playerWidth;
@@ -43,8 +42,15 @@ public class BallScript : MonoBehaviour {
 
     void OnCollisionEnter2D (Collision2D collision) {
         if (ballIsActive) {
-            GetComponent<AudioSource> ().clip = hitSound;
-            GetComponent<AudioSource> ().Play ();
+
+            audioSource.clip = hitSound;
+            if (collision.gameObject.tag == "cube") {
+                BlockScript bs = collision.gameObject.GetComponent<BlockScript> ();
+                audioSource.pitch = (bs.tableOfColors.Length - bs.hitsToKill+ bs.numberOfHits + 1.0f) / bs.tableOfColors.Length;
+            } else
+                audioSource.pitch = 1;
+            audioSource.Play ();
+
         }
 
         // udzerzenie w playera
@@ -62,8 +68,14 @@ public class BallScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+         //jesli nie jest aktywne samoistne poruszanie pileczki pileczka ma ustawiana pozycje x na identyczna z playerem 
+        if (!ballIsActive && playerObject != null) {
+            //poruszanie pileczki przez transform 
+            ballPosition.x = playerObject.transform.position.x;
+            transform.position = ballPosition;
+        }
         //jesli nacisniesz klawisz przypisany do wirtualnego klawisza 'jump' zostanie uruchomione poruszanie i odbijanie sie pileczki   
-        if (Input.GetButtonDown ("Jump") == true && (!ballIsActive)) {
+        if ((Input.GetButtonDown ("Jump") == true || Input.GetKeyUp (KeyCode.Mouse0)) && (!ballIsActive)) {
             rgb2D.isKinematic = false;
 
             //nadanie poczatkowej sily pileczce ; sposob 1
@@ -77,12 +89,7 @@ public class BallScript : MonoBehaviour {
 
         }
 
-        //jesli nie jest aktywne samoistne poruszanie pileczki pileczka ma ustawiana pozycje x na identyczna z playerem 
-        if (!ballIsActive && playerObject != null) {
-            //poruszanie pileczki przez transform 
-            ballPosition.x = playerObject.transform.position.x;
-            transform.position = ballPosition;
-        }
+       
 
         //wykonywane jesli pileczkawypadnie poza plansz u dolu 
         else if (ballIsActive && transform.position.y < -6f) {
