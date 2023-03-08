@@ -104,7 +104,7 @@ MonoBehaviour:
   life: 3
   lifesText: {fileID: 0}
   pointsText: {fileID: 0}
-  dragDistance: 0.1
+  dragDistance: 0.2
   pointSound: {fileID: 8300000, guid: 3f200d83da1495846aa3717eedad73db, type: 3}
   lifeSound: {fileID: 8300000, guid: 1e2f1fbb30ab8dc41b0b2a323e57c582, type: 3}
 --- !u!50 &2329837076315854517
