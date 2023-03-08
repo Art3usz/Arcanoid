@@ -15,9 +15,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Info.unity
     guid: 51eb4ed9c5ca64d4dbb4ae26db009d34
   - enabled: 1
+    path: Assets/Scenes/lv 0.unity
+    guid: 341310d2a712f7645a5e83205d25b3a4
+  - enabled: 1
     path: Assets/Scenes/lv 1.unity
     guid: ac759aac10be07049a80074f2767943f
   - enabled: 1
+    path: Assets/Scenes/lv 2.unity
+    guid: 1ded45b8db84f7c42bbee342a2c7ba3a
+  - enabled: 1
+    path: Assets/Scenes/lv 3.unity
+    guid: f23ed9fe1717d51479ea370863ff2b6b
+  - enabled: 0
     path: Assets/Scenes/lv random 1.unity
     guid: 82f22044af9886643adf4a65b6ae0b81
   - enabled: 1

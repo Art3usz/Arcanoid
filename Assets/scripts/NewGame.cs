@@ -8,7 +8,7 @@ public class NewGame : MonoBehaviour {
         //nulliing points
         GameObject.FindGameObjectWithTag ("score").GetComponent<NeverDestroy> ().setPoint (0);
         GameObject.FindGameObjectWithTag ("score").GetComponent<NeverDestroy> ().setLifes (3);
-        SceneManager.LoadSceneAsync ("lv 1");
+        SceneManager.LoadSceneAsync ("lv 0");
     }
 
     public void Menu () {
