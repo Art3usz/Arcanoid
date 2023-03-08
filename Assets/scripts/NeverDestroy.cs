@@ -17,9 +17,14 @@ public class NeverDestroy : MonoBehaviour
         aS = gameObject.GetComponent<AudioSource>();
         SceneManager.LoadScene("Menu");
     }
-    public int getLife()
+    public int getLifes()
     {
         return life;
+    }
+
+      public void setLifes(int life)
+    {
+       this.life=life;
     }
     public int getPoint()
     {
@@ -27,7 +32,7 @@ public class NeverDestroy : MonoBehaviour
     }
     public void setPoint(int points)
     {
-        point = points;
+        this.point = points;
     }
     public void Mute()
     {

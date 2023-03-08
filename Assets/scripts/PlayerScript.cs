@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour {
     //zmienne
     //szybkosc playera
-    public int speed = 10;
+    public float speed = 10;
     //komponent Rigidbody2D
     private Rigidbody2D rgb2D;
     //punkty
@@ -25,10 +25,13 @@ public class PlayerScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        score = 0;
+        if (neverSee == null)
+            neverSee = GameObject.FindGameObjectWithTag ("score");
+        score = neverSee.GetComponent<NeverDestroy> ().getPoint ();
+        life=neverSee.GetComponent<NeverDestroy> ().getLifes();
         //pobranie komponentu Rigidbody2D i zapamietanie go w zmiennej
         rgb2D = gameObject.GetComponent<Rigidbody2D> ();
-        isActiveCotroll=false;
+        isActiveCotroll = false;
         StartCoroutine (FirstActivation ());
     }
 
@@ -62,7 +65,7 @@ public class PlayerScript : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         //po nacisnieciu klawisza escape zostaje wylaczona gra
-        if (Input.GetKeyDown (KeyCode.Escape)) {
+        if (Input.GetKeyDown (KeyCode.R)||Input.GetKeyDown (KeyCode.Joystick1Button1)) {
             //Application.Quit();
             SceneManager.LoadScene ("Menu");
         }
@@ -78,7 +81,9 @@ public class PlayerScript : MonoBehaviour {
         GameObject[] cubes = GameObject.FindGameObjectsWithTag ("cube");
         if (cubes.Length <= 0) {
             neverSee.GetComponent<NeverDestroy> ().setPoint (score);
+             neverSee.GetComponent<NeverDestroy> ().setLifes(life);
             SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex + 1);
+            //SceneManager.LoadSceneAsync ("lv random 1");
         }
         if (isActiveCotroll) {
 
@@ -99,5 +104,9 @@ public class PlayerScript : MonoBehaviour {
                 rgb2D.velocity = new Vector2 (speed * inputX, 0);
             }
         }
+    }
+
+    private void FixedUpdate () {
+        speed += 0.0001f;
     }
 }
